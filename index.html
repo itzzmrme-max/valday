@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Valentine's Day, Em 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --rose: #e8435a;
+    --blush: #f9c5d0;
+    --cream: #fff8f9;
+    --deep: #2d1a1f;
+    --gold: #d4a847;
+    --soft: #fde8ec;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Quicksand', sans-serif;
+    background: var(--cream);
+    color: var(--deep);
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ─── FLOATING HEARTS BG ─── */
+  .hearts-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0; overflow: hidden;
+  }
+  .hearts-bg span {
+    position: absolute; bottom: -50px;
+    font-size: 1.2rem; opacity: 0;
+    animation: floatUp linear infinite;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg); opacity: 0.6; }
+    100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+  }
+
+  /* ─── SECTIONS ─── */
+  .section {
+    display: none;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+    text-align: center;
+    animation: fadeInUp 0.7s ease forwards;
+  }
+  .section.active { display: flex; }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.2rem, 6vw, 4rem);
+    color: var(--rose);
+    line-height: 1.2;
+    margin-bottom: 0.5rem;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.8rem);
+    color: var(--rose);
+    margin-bottom: 1rem;
+  }
+  p { font-size: 1.1rem; color: #7a4a55; line-height: 1.7; max-width: 540px; margin: 0 auto 1rem; }
+
+  /* ─── CARD ─── */
+  .card {
+    background: white;
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    max-width: 520px; width: 100%;
+    box-shadow: 0 20px 60px rgba(232,67,90,0.15), 0 4px 20px rgba(232,67,90,0.08);
+    border: 1px solid #fcdce2;
+    position: relative;
+  }
+  .card::before {
+    content: '';
+    position: absolute; top: -1px; left: 30px; right: 30px; height: 4px;
+    background: linear-gradient(90deg, var(--rose), var(--gold), var(--rose));
+    border-radius: 0 0 4px 4px;
+  }
+
+  /* ─── BUTTONS ─── */
+  .btn {
+    display: inline-block;
+    padding: 0.9rem 2.2rem;
+    border-radius: 50px;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    margin: 0.4rem;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--rose), #c0304a);
+    color: white;
+    box-shadow: 0 6px 20px rgba(232,67,90,0.4);
+  }
+  .btn-primary:hover {
+    transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 10px 30px rgba(232,67,90,0.5);
+  }
+  .btn-ghost {
+    background: white;
+    color: var(--rose);
+    border: 2px solid var(--blush);
+  }
+  .btn-ghost:hover {
+    background: var(--soft);
+    transform: translateY(-2px);
+  }
+  .btn-yes {
+    background: linear-gradient(135deg, #27ae60, #1e8449);
+    color: white;
+    font-size: 1.2rem;
+    padding: 1rem 2.5rem;
+    box-shadow: 0 6px 20px rgba(39,174,96,0.4);
+    position: relative;
+  }
+  .btn-yes:hover { transform: translateY(-3px) scale(1.05); }
+  .btn-no {
+    background: white;
+    color: #999;
+    border: 2px solid #ddd;
+    font-size: 1rem;
+    transition: all 0.1s ease;
+    position: absolute;
+  }
+
+  /* ─── PHOTO PLACEHOLDERS ─── */
+  .photo-row {
+    display: flex; gap: 1rem; justify-content: center;
+    flex-wrap: wrap; margin: 1.5rem 0;
+  }
+  .photo-frame {
+    width: 160px; height: 180px;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 3px solid var(--blush);
+    box-shadow: 0 8px 24px rgba(232,67,90,0.2);
+    background: var(--soft);
+    display: flex; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .photo-frame img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .photo-placeholder {
+    font-size: 2.5rem; flex-direction: column; display: flex;
+    align-items: center; gap: 0.4rem;
+    color: var(--rose); opacity: 0.5;
+    font-size: 0.75rem; font-weight: 600;
+  }
+  .photo-placeholder span { font-size: 2.5rem; }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    display: flex; flex-direction: column; gap: 0.8rem;
+    text-align: left; max-width: 400px; margin: 1rem auto;
+  }
+  .timeline-item {
+    display: flex; align-items: flex-start; gap: 1rem;
+    background: var(--soft); border-radius: 14px; padding: 0.9rem 1.2rem;
+    border: 1px solid var(--blush);
+    animation: fadeInUp 0.5s ease forwards;
+    opacity: 0;
+  }
+  .timeline-item:nth-child(1) { animation-delay: 0.1s; }
+  .timeline-item:nth-child(2) { animation-delay: 0.25s; }
+  .timeline-item:nth-child(3) { animation-delay: 0.4s; }
+  .timeline-item:nth-child(4) { animation-delay: 0.55s; }
+  .timeline-item:nth-child(5) { animation-delay: 0.7s; }
+  .t-icon { font-size: 1.6rem; flex-shrink: 0; }
+  .t-info strong { font-size: 0.85rem; color: var(--rose); font-weight: 700; display: block; }
+  .t-info span { font-size: 1rem; color: var(--deep); font-weight: 600; }
+
+  /* ─── GIFT REVEAL ─── */
+  .gift-box {
+    font-size: 5rem; cursor: pointer;
+    display: inline-block;
+    animation: wiggle 1s ease infinite;
+    transition: transform 0.3s;
+    user-select: none;
+  }
+  .gift-box:hover { transform: scale(1.15); }
+  @keyframes wiggle {
+    0%,100% { transform: rotate(-5deg); }
+    50%      { transform: rotate(5deg); }
+  }
+  .gifts-reveal {
+    display: none;
+    flex-direction: column; align-items: center; gap: 1.2rem;
+    animation: fadeInUp 0.6s ease forwards;
+  }
+  .gift-items {
+    display: flex; gap: 1.2rem; flex-wrap: wrap; justify-content: center;
+    margin: 0.5rem 0;
+  }
+  .gift-item {
+    background: var(--soft); border-radius: 18px;
+    padding: 1.2rem 1rem; border: 2px solid var(--blush);
+    width: 140px; text-align: center;
+    box-shadow: 0 4px 16px rgba(232,67,90,0.12);
+    transition: transform 0.3s;
+  }
+  .gift-item:hover { transform: translateY(-4px); }
+  .gift-item img {
+    width: 80px; height: 80px; object-fit: contain;
+    border-radius: 10px; margin-bottom: 0.5rem;
+  }
+  .gift-item p { font-size: 0.85rem; margin: 0; font-weight: 700; color: var(--rose); }
+
+  /* ─── MOVIE OPTIONS ─── */
+  .movie-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+    margin: 1rem 0; max-width: 420px; width: 100%;
+  }
+  .movie-btn {
+    background: white; border: 2px solid var(--blush);
+    border-radius: 14px; padding: 0.9rem;
+    cursor: pointer; font-family: 'Quicksand', sans-serif;
+    font-weight: 600; font-size: 0.9rem; color: var(--deep);
+    transition: all 0.3s; text-align: left;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .movie-btn:hover { background: var(--soft); border-color: var(--rose); transform: scale(1.02); }
+  .movie-btn .movie-emoji { font-size: 1.4rem; }
+
+  /* ─── DINNER OPTIONS ─── */
+  .dinner-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;
+    margin: 1rem 0; max-width: 420px; width: 100%;
+  }
+  .dinner-btn {
+    background: white; border: 2px solid var(--blush);
+    border-radius: 14px; padding: 1rem;
+    cursor: pointer; font-family: 'Quicksand', sans-serif;
+    font-weight: 600; font-size: 0.9rem; color: var(--deep);
+    transition: all 0.3s; text-align: center;
+  }
+  .dinner-btn:hover { background: var(--soft); border-color: var(--rose); transform: scale(1.02); }
+  .dinner-btn.selected {
+    background: linear-gradient(135deg, var(--rose), #c0304a);
+    color: white; border-color: var(--rose);
+    transform: scale(1.05);
+  }
+  .dinner-btn .d-emoji { font-size: 1.5rem; display: block; margin-bottom: 0.3rem; }
+
+  /* ─── YES/NO ─── */
+  #yesno-container { position: relative; height: 80px; width: 300px; margin: 1rem auto; }
+
+  /* ─── CONFETTI ─── */
+  .confetti-piece {
+    position: fixed; width: 10px; height: 10px;
+    top: -10px; pointer-events: none; z-index: 9999;
+    animation: confettiFall linear forwards;
+    border-radius: 2px;
+  }
+  @keyframes confettiFall {
+    to { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  /* ─── BADGE ─── */
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--rose), var(--gold));
+    color: white; font-size: 0.75rem; font-weight: 700;
+    padding: 0.25rem 0.75rem; border-radius: 50px;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  /* ─── FINAL CARD ─── */
+  .final-schedule {
+    background: linear-gradient(135deg, #fff0f3, #fff8f0);
+    border: 2px solid var(--blush);
+    border-radius: 20px; padding: 1.5rem;
+    margin: 1rem 0; width: 100%; max-width: 400px;
+  }
+  .schedule-row {
+    display: flex; align-items: center; gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px dashed var(--blush);
+    font-weight: 600;
+  }
+  .schedule-row:last-child { border-bottom: none; }
+  .schedule-time {
+    background: var(--rose); color: white;
+    font-size: 0.75rem; font-weight: 700;
+    padding: 0.2rem 0.6rem; border-radius: 50px;
+    min-width: 60px; text-align: center;
+    flex-shrink: 0;
+  }
+
+  .progress-dots {
+    display: flex; gap: 0.5rem; justify-content: center;
+    position: fixed; bottom: 1.5rem; left: 50%; transform: translateX(-50%);
+    z-index: 100;
+  }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--blush); transition: all 0.3s;
+  }
+  .dot.active { background: var(--rose); transform: scale(1.3); }
+
+  .sparkle { display: inline-block; animation: sparkle 1.5s ease infinite; }
+  @keyframes sparkle {
+    0%,100% { transform: scale(1) rotate(0deg); }
+    50%      { transform: scale(1.2) rotate(15deg); }
+  }
+
+  /* blind joke pill */
+  .joke-pill {
+    background: #fff3cd; border: 1px solid #ffd970;
+    color: #856404; border-radius: 50px;
+    padding: 0.4rem 1rem; font-size: 0.85rem;
+    font-weight: 600; display: inline-block; margin: 0.5rem 0;
+  }
+
+  @media (max-width: 480px) {
+    .movie-grid, .dinner-grid { grid-template-columns: 1fr 1fr; }
+    .gift-items { gap: 0.8rem; }
+    .gift-item { width: 110px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating hearts -->
+<div class="hearts-bg" id="heartsBg"></div>
+
+<!-- Progress dots -->
+<div class="progress-dots" id="progressDots"></div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 0: INTRO / ENVELOPE
+══════════════════════════════════════════ -->
+<div class="section active" id="s0">
+  <div class="card" style="max-width:480px;">
+    <div class="badge">💌 For Em Only</div>
+    <div style="font-size:4.5rem; margin-bottom:0.5rem;">💌</div>
+    <h1>Hey Em…</h1>
+    <p>Someone left you a very important message.<br>It might change your plans for tomorrow. 👀</p>
+    <div class="joke-pill">⚠️ Warning: may cause involuntary smiling</div>
+    <br>
+    <button class="btn btn-primary" onclick="goTo(1)">Open the letter 💕</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 1: THE CARD + PHOTOS
+══════════════════════════════════════════ -->
+<div class="section" id="s1">
+  <div class="card">
+    <div class="badge">A letter from your boyfriend 💌</div>
+    <h2>Dear Em,</h2>
+    <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.15rem; color:#5a2d3a; line-height:1.9;">
+      I still don't know how someone as breathtakingly beautiful as you ended up choosing <em>me</em>…
+      honestly you must be a little blind, and I'm not complaining one bit 😏<br><br>
+      This is our first Valentine's Day together, and I just want you to know — you've made everything
+      better just by being in it. ❤️
+    </p>
+
+    <!-- Photo row -->
+    <div class="photo-row">
+      <div class="photo-frame">
+        <img src="photo1.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Us">
+        <div class="photo-placeholder"><span>📸</span>photo1.jpg</div>
+      </div>
+      <div class="photo-frame">
+        <img src="photo2.jpg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" alt="Us">
+        <div class="photo-placeholder"><span>📸</span>photo2.jpg</div>
+      </div>
+    </div>
+
+    <p style="font-size:0.9rem; color:#b07080; margin-bottom:0;">
+      Happy Valentine's Day, gorgeous 🌹
+    </p>
+    <br>
+    <button class="btn btn-primary" onclick="goTo(2)">Keep reading 💕</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 2: YES / NO
+══════════════════════════════════════════ -->
+<div class="section" id="s2">
+  <div class="card">
+    <div style="font-size:3rem; margin-bottom:0.5rem;">🥺</div>
+    <h2>One tiny question…</h2>
+    <p>Will you be my Valentine? 💝<br><span style="font-size:0.85rem; color:#b07080;">(choose wisely 👀)</span></p>
+
+    <div id="yesno-container">
+      <button class="btn btn-yes" id="yesBtn" onclick="yesClicked()" style="position:absolute; left:0; top:0;">
+        💗 Yes, obviously!
+      </button>
+      <button class="btn btn-no" id="noBtn" onmouseover="runAway()" ontouchstart="runAway()">
+        No...
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 3: GIFT REVEAL
+══════════════════════════════════════════ -->
+<div class="section" id="s3">
+  <div class="card">
+    <div class="badge">🎁 Surprise time!</div>
+    <h2>I got you something…</h2>
+    <p>Tap the gift to see what's inside 👇</p>
+    <div class="gift-box" id="giftBox" onclick="revealGift()">🎁</div>
+
+    <div class="gifts-reveal" id="giftsReveal">
+      <p style="font-family:'Playfair Display',serif; font-style:italic; color:#5a2d3a;">
+        Because you deserve everything beautiful 🌹
+      </p>
+      <div class="gift-items">
+        <div class="gift-item">
+          <img src="https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=200&q=80" alt="Nespresso">
+          <p>☕ Nespresso Pods</p>
+        </div>
+        <div class="gift-item">
+          <img src="https://images.unsplash.com/photo-1559181567-c3190ca9959b?w=200&q=80" alt="Roses">
+          <p>🌹 Red Roses</p>
+        </div>
+        <div class="gift-item">
+          <img src="https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=200&q=80" alt="Chocolates">
+          <p>🍫 Ferrero Rocher</p>
+        </div>
+      </div>
+      <button class="btn btn-primary" onclick="goTo(4)">What's next? 👀</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 4: MOVIE CHOICE (rigged 😂)
+══════════════════════════════════════════ -->
+<div class="section" id="s4">
+  <div class="card">
+    <div class="badge">🎬 Movie Night</div>
+    <h2>Pick a movie for tonight!</h2>
+    <p>I'll let you choose 😇<br><span style="font-size:0.85rem; color:#b07080;">(totally your choice, no tricks here 👀)</span></p>
+
+    <div class="movie-grid" id="movieGrid">
+      <div class="movie-btn" onclick="moviePicked(this)">
+        <span class="movie-emoji">😴</span>
+        <div><strong>History of Paint Drying</strong><br><small style="color:#999;">Documentary, 4h 12min</small></div>
+      </div>
+      <div class="movie-btn" onclick="moviePicked(this)">
+        <span class="movie-emoji">😱</span>
+        <div><strong>Haunted Dentist Office 3</strong><br><small style="color:#999;">Horror, Rated R</small></div>
+      </div>
+      <div class="movie-btn" onclick="moviePicked(this)">
+        <span class="movie-emoji">💘</span>
+        <div><strong>My Big Fat Rom-Com Wedding Part 7</strong><br><small style="color:#999;">Romance, 2h 48min</small></div>
+      </div>
+      <div class="movie-btn" onclick="moviePicked(this)">
+        <span class="movie-emoji">🔍</span>
+        <div><strong>Crime 101</strong><br><small style="color:#27ae60; font-weight:700;">✨ Tonight's Pick</small></div>
+      </div>
+    </div>
+    <p id="movieResult" style="display:none; font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:#5a2d3a;"></p>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 5: DINNER CHOICE
+══════════════════════════════════════════ -->
+<div class="section" id="s5">
+  <div class="card">
+    <div class="badge">🍽️ Dinner is on me</div>
+    <h2>Where shall we eat?</h2>
+    <p>You actually get to pick this one 😊<br>No tricks, I promise.</p>
+
+    <div class="dinner-grid">
+      <div class="dinner-btn" onclick="dinnerPicked(this, '🥩 Steak Night')">
+        <span class="d-emoji">🥩</span>Steak
+      </div>
+      <div class="dinner-btn" onclick="dinnerPicked(this, '🦞 Seafood Boil')">
+        <span class="d-emoji">🦞</span>Seafood Boil
+      </div>
+      <div class="dinner-btn" onclick="dinnerPicked(this, '🫒 Mediterranean')">
+        <span class="d-emoji">🫒</span>Mediterranean
+      </div>
+      <div class="dinner-btn" onclick="dinnerPicked(this, '🥙 Turkish')">
+        <span class="d-emoji">🥙</span>Turkish
+      </div>
+      <div class="dinner-btn" onclick="dinnerPicked(this, '🍛 Indian')">
+        <span class="d-emoji">🍛</span>Indian
+      </div>
+      <div class="dinner-btn" onclick="dinnerPicked(this, '👨‍🍳 Chef Muneeb\'s Special')">
+        <span class="d-emoji">👨‍🍳</span>Chef's Special 😏
+      </div>
+    </div>
+
+    <p id="dinnerResult" style="display:none; font-family:'Playfair Display',serif; font-style:italic; font-size:1rem; color:#5a2d3a; margin-top:0.5rem;"></p>
+    <button class="btn btn-primary" id="dinnerNextBtn" style="display:none; margin-top:1rem;" onclick="goTo(6)">
+      See the full plan! 🗓️
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════
+     SECTION 6: FINAL PLAN REVEAL
+══════════════════════════════════════════ -->
+<div class="section" id="s6">
+  <div class="card" style="max-width:500px;">
+    <div class="badge">🗓️ The Valentine's Day Plan</div>
+    <h1>Our Perfect Day 💕</h1>
+    <p style="font-size:0.95rem;">Tomorrow is all about you, Em. Here's what's happening:</p>
+
+    <div class="final-schedule">
+      <div class="schedule-row">
+        <span class="schedule-time">4:00 PM</span>
+        <span>🎬 Movie — <strong>Crime 101</strong></span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-time">6:30 PM</span>
+        <span>🚌 Head to the place, get cute</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-time">8:00 PM</span>
+        <span id="dinnerScheduleLabel">🍽️ Dinner</span>
+      </div>
+      <div class="schedule-row">
+        <span class="schedule-time">9:00 PM</span>
+        <span>💬 Yap session 😌</span>
+      </div>
+      <div class="schedule-row" style="background: linear-gradient(135deg,#fff0f3,#fff8f0); border-radius:10px; padding:0.7rem;">
+        <span class="schedule-time" style="background: linear-gradient(135deg,#e8435a,#d4a847);">10 PM</span>
+        <span id="spicySlot">🔒 <em>Top Secret…</em></span>
+      </div>
+    </div>
+
+    <button class="btn btn-ghost" style="margin-top:0.5rem;" onclick="revealSpicy()">Unlock 10 PM 🔥</button>
+    <br>
+    <div id="spicyReveal" style="display:none; margin-top:1rem;">
+      <p style="font-family:'Playfair Display',serif; font-style:italic; color:#5a2d3a; font-size:1.05rem;">
+        10 PM — Spicy dessert 🌶️😏<br><em>iykyk...</em>
+      </p>
+    </div>
+
+    <div style="margin-top:1.5rem; padding-top:1.5rem; border-top: 1px dashed var(--blush);">
+      <p style="font-family:'Playfair Display',serif; font-style:italic; font-size:1.1rem; color:#5a2d3a;">
+        Happy First Valentine's Day, Em. 💕<br>
+        You're the best thing that ever happened to this blind-lucks guy. 😏
+      </p>
+      <div style="margin-top:1rem; font-size:0.9rem; color:#b07080; font-weight:600;">
+        — Your boyfriend 💌
+      </div>
+    </div>
+
+    <div id="finalConfettiBtn" style="margin-top:1.5rem;">
+      <button class="btn btn-primary" onclick="launchConfetti(); this.textContent='🎉 Yay!!'" style="font-size:1.2rem;">
+        🎊 Celebrate!
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  const TOTAL_SECTIONS = 7;
+  let currentSection = 0;
+  let dinnerChoice = '';
+
+  // ── Progress dots ──
+  function buildDots() {
+    const container = document.getElementById('progressDots');
+    for (let i = 0; i < TOTAL_SECTIONS; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === 0 ? ' active' : '');
+      d.id = 'dot' + i;
+      container.appendChild(d);
+    }
+  }
+  buildDots();
+
+  function goTo(n) {
+    document.getElementById('s' + currentSection).classList.remove('active');
+    document.getElementById('dot' + currentSection).classList.remove('active');
+    currentSection = n;
+    document.getElementById('s' + n).classList.add('active');
+    document.getElementById('dot' + n).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── Floating hearts ──
+  function spawnHearts() {
+    const bg = document.getElementById('heartsBg');
+    const emojis = ['💕', '💗', '💓', '❤️', '🌹', '✨', '💝', '💖'];
+    for (let i = 0; i < 18; i++) {
+      const s = document.createElement('span');
+      s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+      s.style.left = Math.random() * 100 + '%';
+      s.style.fontSize = (0.8 + Math.random() * 1.2) + 'rem';
+      s.style.animationDuration = (6 + Math.random() * 10) + 's';
+      s.style.animationDelay = (Math.random() * 10) + 's';
+      bg.appendChild(s);
+    }
+  }
+  spawnHearts();
+
+  // ── YES/NO runaway button ──
+  let noMoves = 0;
+  function runAway() {
+    noMoves++;
+    const btn = document.getElementById('noBtn');
+    const container = document.getElementById('yesno-container');
+    const maxX = container.offsetWidth - btn.offsetWidth - 10;
+    const maxY = container.offsetHeight - btn.offsetHeight - 5;
+    btn.style.left = Math.random() * maxX + 'px';
+    btn.style.top  = Math.random() * maxY + 'px';
+    if (noMoves > 4) {
+      btn.textContent = 'Fine... 🙄';
+    }
+    if (noMoves > 7) {
+      btn.style.opacity = '0.3';
+      btn.style.pointerEvents = 'none';
+    }
+  }
+
+  function yesClicked() {
+    launchConfetti();
+    document.getElementById('yesBtn').textContent = '💗 Knew it!';
+    document.getElementById('yesBtn').disabled = true;
+    setTimeout(() => goTo(3), 1200);
+  }
+
+  // ── Gift reveal ──
+  function revealGift() {
+    document.getElementById('giftBox').style.display = 'none';
+    const reveal = document.getElementById('giftsReveal');
+    reveal.style.display = 'flex';
+    launchConfetti(30);
+  }
+
+  // ── Movie picked (all roads lead to Crime 101) ──
+  function moviePicked(el) {
+    const allBtns = document.querySelectorAll('.movie-btn');
+    allBtns.forEach(b => {
+      b.style.opacity = '0.4';
+      b.style.pointerEvents = 'none';
+    });
+    el.style.opacity = '1';
+    el.style.border = '2px solid var(--rose)';
+    el.style.background = 'var(--soft)';
+
+    const result = document.getElementById('movieResult');
+    result.style.display = 'block';
+
+    const title = el.querySelector('strong').textContent;
+    if (title === 'Crime 101') {
+      result.textContent = '✅ Great choice! Crime 101 it is! 🎬';
+    } else {
+      result.innerHTML = `Hmm, interesting choice 😏<br>…but actually we're watching <strong>Crime 101</strong>! 🎬 Same outcome babe 💕`;
+    }
+    setTimeout(() => goTo(5), 2000);
+  }
+
+  // ── Dinner picked ──
+  function dinnerPicked(el, label) {
+    dinnerChoice = label;
+    const allBtns = document.querySelectorAll('.dinner-btn');
+    allBtns.forEach(b => b.classList.remove('selected'));
+    el.classList.add('selected');
+
+    const result = document.getElementById('dinnerResult');
+    result.style.display = 'block';
+    result.textContent = `Amazing choice! ${label} it is 😋`;
+
+    document.getElementById('dinnerNextBtn').style.display = 'inline-block';
+    document.getElementById('dinnerScheduleLabel').innerHTML = `🍽️ Dinner — <strong>${label}</strong>`;
+  }
+
+  // ── Spicy reveal ──
+  function revealSpicy() {
+    document.getElementById('spicySlot').innerHTML = '🌶️ <strong>Spicy Dessert</strong> 😏';
+    document.getElementById('spicyReveal').style.display = 'block';
+    launchConfetti(20);
+  }
+
+  // ── Confetti ──
+  function launchConfetti(count = 60) {
+    const colors = ['#e8435a','#d4a847','#f9c5d0','#27ae60','#ffd700','#ff69b4','#c0304a'];
+    for (let i = 0; i < count; i++) {
+      setTimeout(() => {
+        const c = document.createElement('div');
+        c.className = 'confetti-piece';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.background = colors[Math.floor(Math.random() * colors.length)];
+        c.style.width  = (8 + Math.random() * 8) + 'px';
+        c.style.height = (8 + Math.random() * 8) + 'px';
+        c.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
+        c.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        c.style.animationDelay = '0s';
+        document.body.appendChild(c);
+        setTimeout(() => c.remove(), 4000);
+      }, i * 30);
+    }
+  }
+</script>
+</body>
+</html>
